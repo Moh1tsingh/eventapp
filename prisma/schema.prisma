@@ -12,7 +12,6 @@ model Event {
   name      String
   startDate DateTime
   endDate   DateTime
-  users     User[]
   subEvents SubEvent[]
 }
 
@@ -23,17 +22,27 @@ model SubEvent {
   endTime   DateTime
   Event     Event    @relation(fields: [eventId], references: [id])
   eventId   Int
+  userEvents UserEvent[]
 }
 
 model User {
   id        Int    @id @default(autoincrement())
   name      String
-  email     String
-  phone     Int
+  email     String @unique
+  phone     BigInt @unique
   class     Class
-  eventId   Int
-  Event     Event  @relation(fields: [eventId], references: [id])
-  subevents Int[]
+  userEvents UserEvent[]
+}
+
+model UserEvent {
+  userId       Int
+  subEventId   Int
+  attendedAt   DateTime?   // Timestamp when the user attended
+  
+  user         User        @relation(fields: [userId], references: [id])
+  subEvent     SubEvent   @relation(fields: [subEventId], references: [id])
+  
+  @@id([userId, subEventId])  // Enforces unique attendance per user-event or user-sub-event combination
 }
 
 enum Class {
