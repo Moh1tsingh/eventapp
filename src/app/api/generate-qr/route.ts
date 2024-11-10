@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
 import QRCode from 'qrcode';
 import { createClient } from '@supabase/supabase-js'
 import jwt from 'jsonwebtoken'
+import { prisma } from '@/utils/db';
 
-const prisma = new PrismaClient();
 
 const supabaseProjectURL = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
