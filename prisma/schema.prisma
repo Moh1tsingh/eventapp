@@ -31,7 +31,6 @@ model User {
   email     String @unique
   phone     BigInt @unique
   class     Class
-  subevents Int[]
   userEvents UserEvent[]
 }
 
